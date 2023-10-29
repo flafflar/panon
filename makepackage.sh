@@ -12,6 +12,7 @@ rm ./plasmoid/contents/scripts/__pycache__/ -r
 rm ./plasmoid/contents/scripts/*/__pycache__/ -r
 rm ./plasmoid/contents/scripts/*/*/__pycache__/ -r
 rm ./plasmoid/contents/scripts/*/*/*/__pycache__/ -r
+rm ./plasmoid/contents/scripts/venv/ -r
 rm ./panon.plasmoid
 
 # i18n
