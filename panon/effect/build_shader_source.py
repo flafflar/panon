@@ -108,7 +108,7 @@ def build_qsb(shader_source: str) -> str:
         raise Exception("qsb not found")
     
     qsb, qsb_path = tempfile.mkstemp(dir=tmp_dir, suffix='.qsb')
-    subprocess.run([qsb_bin_path, '--qt6', frag_path, '-o', qsb_path], check=True)
+    subprocess.run([qsb_bin_path, '--glsl', '150', frag_path, '-o', qsb_path], check=True)
     os.close(qsb)
 
     return qsb_path

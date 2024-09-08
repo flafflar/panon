@@ -1,7 +1,7 @@
-#version 130
+#version 440
 
-out vec4 out_Color;
-in mediump vec2 qt_TexCoord0;
+layout(location = 0) in vec2 qt_TexCoord0;
+layout(location = 0) out vec4 out_Color;
 
 uniform sampler2D waveBuffer; 
 
