@@ -49,4 +49,4 @@ function(add_buffered_shader shader_name glsl_versions)
     add_shader_raw(${shader_name} ${glsl_versions} image buffer)
 endfunction()
 
-add_shader(default "100 es,120,150" image)
+add_shader(default "100 es,120,150")
