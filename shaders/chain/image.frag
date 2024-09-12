@@ -1,10 +1,11 @@
-#define particle_opacity $particle_opacity
-#define height_ratio $height_ratio
-#define strength $strength
-#define unit_radius $unit_radius
-#define density $density
+#version 440
+include(shadertoy-head.fsh)
 
-
+// #define particle_opacity $particle_opacity
+// #define height_ratio $height_ratio
+// #define strength $strength
+// #define unit_radius $unit_radius
+// #define density $density
 
 float rand(vec2 co) {
     return fract(sin(dot(co.xy,vec2(12.9898,78.233))) * 43758.5453);
@@ -35,3 +36,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         }
     }
 }
+
+include(shadertoy-foot.fsh)

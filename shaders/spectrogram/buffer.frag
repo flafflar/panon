@@ -1,4 +1,6 @@
-#define shrink_step $shrink_step
+#version 440
+include(shadertoy-head.fsh)
+// #define shrink_step $shrink_step
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float x=fragCoord.x/iResolution.x;
@@ -20,3 +22,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 
     fragColor= texture(iChannel2, vec2(x,(fragCoord.y-1)/iResolution.y));
 }
+
+include(shadertoy-foot-buffer.fsh)

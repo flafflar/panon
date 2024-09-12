@@ -45,8 +45,12 @@ function(add_shader shader_name glsl_versions)
     add_shader_raw(${shader_name} ${glsl_versions} image)
 endfunction()
 
-function(add_buffered_shader shader_name glsl_versions)
+function(add_shader_with_buffer shader_name glsl_versions)
     add_shader_raw(${shader_name} ${glsl_versions} image buffer)
 endfunction()
 
+add_shader_with_buffer(bar1ch "100 es,120,150")
+#add_shader(chain "100 es,120,150")
 add_shader(default "100 es,120,150")
+#add_shader(oie1ch  "100 es,120,150")
+#add_shader_with_buffer(spectrogram "100 es,120,150")

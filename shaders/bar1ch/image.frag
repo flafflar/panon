@@ -1,5 +1,9 @@
-#define pixel_fill $bar_width
-#define pixel_empty $gap_width
+#version 440
+include(shadertoy-head.fsh)
+include(utils.fsh)
+
+#define pixel_fill 5
+#define pixel_empty 2
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     int pixel_x= int( fragCoord.x);
@@ -24,3 +28,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
             fragColor=vec4(rgb*1.,1.);
     }
 }
+
+include(shadertoy-foot.fsh)

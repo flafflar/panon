@@ -103,3 +103,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# compiled shaders
+*.qsb
+plasmoid/shaders/*/meta.json
