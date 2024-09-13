@@ -54,3 +54,6 @@ add_shader_with_buffer(bar1ch "100 es,120,150")
 add_shader(default "100 es,120,150")
 #add_shader(oie1ch  "100 es,120,150")
 #add_shader_with_buffer(spectrogram "100 es,120,150")
+
+# These are not used by anything at the moment, but require OpenGL 1.5 to be used
+add_shader_raw("" "150" gldft wave-buffer)

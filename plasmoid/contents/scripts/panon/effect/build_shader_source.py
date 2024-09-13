@@ -26,19 +26,26 @@ effect = None
 
 # Set a default effect.
 for e in effect_list:
+    if e.id == effect_id:
+        effect = e
+        break
+
     if e.name == 'default':
         effect = e
 
-for e in effect_list:
-    if e.id == effect_id:
-        effect = e
+def texture_uri(path: Path):
+    if path.exists():
+        return str(path.absolute())
+    return ''
+
+applet_effect_home = effect_dirs[-1]
 
 obj = {
     'image_shader': str(Path(effect.path) / 'image.qsb'),
     'buffer_shader': str(Path(effect.path) / 'buffer.qsb'),
-    'wave_buffer': 'TODO',
-    'gldft': 'TODO',
-    'texture': 'TODO',
+    'wave_buffer': applet_effect_home / 'wave-buffer.qsb',
+    'gldft': applet_effect_home / 'gldft.qsb',
+    'texture': texture_uri(Path(effect.path) / 'texture.png'),
     'enable_iChannel0': True,
     'enable_iChannel1': True,
 }
