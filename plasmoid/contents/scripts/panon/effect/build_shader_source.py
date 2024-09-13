@@ -1,13 +1,8 @@
-import os
 import sys
 import json
-import tempfile
-import subprocess
 from pathlib import Path
 
-from docopt import docopt
-
-from .helper import effect_dirs, read_file, read_file_lines
+from .helper import effect_dirs
 from . import get_effect_list
 
 import json, base64
