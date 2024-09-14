@@ -1,4 +1,6 @@
-#define shrink_step $shrink_step
+#version 440
+include(shadertoy-head.fsh)
+include(utils.fsh)
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float x=fragCoord.x/iResolution.x;
@@ -6,7 +8,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         fragColor= texture(iChannel1, vec2(x,0));
         return;
     }
-    int step_=min(shrink_step ,int(iResolution.x /1.2 / iResolution.y));
+    int step_=min(iParam0, int(iResolution.x /1.2 / iResolution.y));
     float current_width=(iResolution.x)-fragCoord.y*step_;
     float prev_width=(iResolution.x)-(fragCoord.y-1)*step_;
 
@@ -20,3 +22,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 
     fragColor= texture(iChannel2, vec2(x,(fragCoord.y-1)/iResolution.y));
 }
+
+include(shadertoy-foot-buffer.fsh)

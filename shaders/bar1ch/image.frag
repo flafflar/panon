@@ -1,5 +1,6 @@
-#define pixel_fill $bar_width
-#define pixel_empty $gap_width
+#version 440
+include(shadertoy-head.fsh)
+include(utils.fsh)
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     int pixel_x= int( fragCoord.x);
@@ -9,8 +10,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 
 
     fragColor=vec4(0,0,0,0);
-    if(pixel_x%(pixel_fill+pixel_empty)<pixel_fill) {
-        float x=pixel_x/(pixel_fill+pixel_empty) /1.0/iResolution.x*(pixel_fill+pixel_empty) ;
+    if(pixel_x%(iParam0+iParam1)<iParam0) {
+        float x=pixel_x/(iParam0+iParam1) /1.0/iResolution.x*(iParam0+iParam1) ;
         vec3 rgb=getRGB(x);
 
         vec4 sample1= texture(iChannel1, vec2(x,0)) ;
@@ -24,3 +25,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
             fragColor=vec4(rgb*1.,1.);
     }
 }
+
+include(shadertoy-foot.fsh)

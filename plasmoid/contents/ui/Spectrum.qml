@@ -94,9 +94,29 @@ Item{
         readonly property variant iChannel2:bufferSES
         readonly property variant iChannel3:Image{source:'file://'+shaderSourceReader.texture_uri}
 
-
         property int coord_gravity:root.gravity
         property bool coord_inversion:cfg.inversion
+
+        proprty int iParam0:root.cfg_effectArgValues[0]
+        proprty int iParam1:root.cfg_effectArgValues[1]
+        proprty int iParam2:root.cfg_effectArgValues[2]
+        proprty int iParam3:root.cfg_effectArgValues[3]
+        proprty int iParam4:root.cfg_effectArgValues[4]
+        proprty int iParam5:root.cfg_effectArgValues[5]
+        proprty int iParam6:root.cfg_effectArgValues[6]
+        proprty int iParam7:root.cfg_effectArgValues[7]
+        proprty int iParam8:root.cfg_effectArgValues[8]
+        proprty int iParam9:root.cfg_effectArgValues[9]
+        proprty double fParam0:root.cfg_effectArgValues[0]
+        proprty double fParam1:root.cfg_effectArgValues[1]
+        proprty double fParam2:root.cfg_effectArgValues[2]
+        proprty double fParam3:root.cfg_effectArgValues[3]
+        proprty double fParam4:root.cfg_effectArgValues[4]
+        proprty double fParam5:root.cfg_effectArgValues[5]
+        proprty double fParam6:root.cfg_effectArgValues[6]
+        proprty double fParam7:root.cfg_effectArgValues[7]
+        proprty double fParam8:root.cfg_effectArgValues[8]
+        proprty double fParam9:root.cfg_effectArgValues[9]
 
         anchors.fill: parent
         blending: true
@@ -128,6 +148,28 @@ Item{
             readonly property variant iChannel2:mainSE.iChannel2
             readonly property variant iChannel3:mainSE.iChannel3
             readonly property variant iMouse:mainSE.iMouse
+
+            proprty int iParam0:root.cfg_effectArgValues[0]
+            proprty int iParam1:root.cfg_effectArgValues[1]
+            proprty int iParam2:root.cfg_effectArgValues[2]
+            proprty int iParam3:root.cfg_effectArgValues[3]
+            proprty int iParam4:root.cfg_effectArgValues[4]
+            proprty int iParam5:root.cfg_effectArgValues[5]
+            proprty int iParam6:root.cfg_effectArgValues[6]
+            proprty int iParam7:root.cfg_effectArgValues[7]
+            proprty int iParam8:root.cfg_effectArgValues[8]
+            proprty int iParam9:root.cfg_effectArgValues[9]
+            proprty double fParam0:root.cfg_effectArgValues[0]
+            proprty double fParam1:root.cfg_effectArgValues[1]
+            proprty double fParam2:root.cfg_effectArgValues[2]
+            proprty double fParam3:root.cfg_effectArgValues[3]
+            proprty double fParam4:root.cfg_effectArgValues[4]
+            proprty double fParam5:root.cfg_effectArgValues[5]
+            proprty double fParam6:root.cfg_effectArgValues[6]
+            proprty double fParam7:root.cfg_effectArgValues[7]
+            proprty double fParam8:root.cfg_effectArgValues[8]
+            proprty double fParam9:root.cfg_effectArgValues[9]
+
             fragmentShader:shaderSourceReader.buffer_shader_source
         }
     }
