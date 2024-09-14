@@ -1,5 +1,6 @@
 #version 440
 include(shadertoy-head.fsh)
+include(utils.fsh)
 
 /*
  * Inspired by OieIcons

@@ -2,9 +2,6 @@
 include(shadertoy-head.fsh)
 include(utils.fsh)
 
-#define pixel_fill 5
-#define pixel_empty 2
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     int pixel_x= int( fragCoord.x);
     int pixel_y= int( fragCoord.y);
@@ -13,8 +10,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 
 
     fragColor=vec4(0,0,0,0);
-    if(pixel_x%(pixel_fill+pixel_empty)<pixel_fill) {
-        float x=pixel_x/(pixel_fill+pixel_empty) /1.0/iResolution.x*(pixel_fill+pixel_empty) ;
+    if(pixel_x%(iParam0+iParam1)<iParam0) {
+        float x=pixel_x/(iParam0+iParam1) /1.0/iResolution.x*(iParam0+iParam1) ;
         vec3 rgb=getRGB(x);
 
         vec4 sample1= texture(iChannel1, vec2(x,0)) ;

@@ -39,6 +39,28 @@ layout(std140, binding = 0) uniform _data {
     // gravity property: North (1), West (4), East (3), South (2)
     int coord_gravity;
     int coord_inversion;
+
+    int iParam0;
+    int iParam1;
+    int iParam2;
+    int iParam3;
+    int iParam4;
+    int iParam5;
+    int iParam6;
+    int iParam7;
+    int iParam8;
+    int iParam9;
+
+    float fParam0;
+    float fParam1;
+    float fParam2;
+    float fParam3;
+    float fParam4;
+    float fParam5;
+    float fParam6;
+    float fParam7;
+    float fParam8;
+    float fParam9;
 };
 
 layout(binding = 1) uniform sampler2D iChannel0;
