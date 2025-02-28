@@ -38,8 +38,8 @@ applet_effect_home = effect_dirs[-1]
 obj = {
     'image_shader': str(Path(effect.path) / 'image.qsb'),
     'buffer_shader': str(Path(effect.path) / 'buffer.qsb'),
-    'wave_buffer': applet_effect_home / 'wave-buffer.qsb',
-    'gldft': applet_effect_home / 'gldft.qsb',
+    'wave_buffer': str(applet_effect_home / 'wave-buffer.qsb'),
+    'gldft': str(applet_effect_home / 'gldft.qsb'),
     'texture': texture_uri(Path(effect.path) / 'texture.png'),
     'enable_iChannel0': True,
     'enable_iChannel1': True,
