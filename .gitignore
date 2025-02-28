@@ -106,4 +106,4 @@ ENV/
 
 # compiled shaders
 *.qsb
-plasmoid/shaders/*/meta.json
+/plasmoid/contents/shaders

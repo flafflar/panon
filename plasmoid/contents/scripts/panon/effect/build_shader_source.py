@@ -33,11 +33,16 @@ def texture_uri(path: Path):
         return str(path.absolute())
     return ''
 
+def path_if_exists(path: Path):
+    if path.exists():
+        return str(path)
+    return ''
+
 applet_effect_home = effect_dirs[-1]
 
 obj = {
-    'image_shader': str(Path(effect.path) / 'image.qsb'),
-    'buffer_shader': str(Path(effect.path) / 'buffer.qsb'),
+    'image_shader': path_if_exists(Path(effect.path) / 'image.qsb'),
+    'buffer_shader': path_if_exists(Path(effect.path) / 'buffer.qsb'),
     'wave_buffer': str(applet_effect_home / 'wave-buffer.qsb'),
     'gldft': str(applet_effect_home / 'gldft.qsb'),
     'texture': texture_uri(Path(effect.path) / 'texture.png'),

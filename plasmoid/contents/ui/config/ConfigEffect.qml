@@ -68,13 +68,9 @@ Kirigami.FormLayout {
         engine: 'executable'
         connectedSources: {
             // Load visual effects when shaderOptions is empty.
-            if(shaderOptions.count<1)return[sh_get_visual_effects]
+            if(shaderOptions.count<1)return[sh_get_visual_effects];
 
-            // Load hint.html and meta.json
-            if(!cfg_visualEffect.endsWith('.frag'))
-                return[sh_read_effect_hint,sh_read_effect_args]
-
-            return []
+            return[sh_read_effect_hint,sh_read_effect_args];
         }
 
         // Text field components used to represent the arguments of the visual effect.
@@ -82,16 +78,19 @@ Kirigami.FormLayout {
         
         onNewData: {
             if(sourceName==sh_read_effect_hint){
-                hint.text=(data.stdout)
+                hint.text=(data.stdout);
             }else if(sourceName==sh_read_effect_args){
+                console.log('stdout', data.stdout);
                 if(data.stdout.length>0){
-                    effect_arguments=JSON.parse(data.stdout)['arguments']
-                    //while(textfieldlst.length>0)textfieldlst.pop().destroy() 
-                    textfieldlst.map(function(o){o.visible=false})
+                    effect_arguments=JSON.parse(data.stdout)['arguments'];
+                    //while(textfieldlst.length>0)textfieldlst.pop().destroy();
+                    textfieldlst.map(function(o){o.visible=false});
                     for(var index=0;index<effect_arguments.length;index++){
                         var arg=effect_arguments[index]
                         if(!firstTimeLoadArgs)
-                            cfg_effectArgValues[index]=arg['default']
+                            cfg_effectArgValues[index]=arg['default'];
+
+                        console.log(index, 'is', cfg_effectArgValues);
                         
                         var component
                         if(arg['type'])
@@ -109,14 +108,14 @@ Kirigami.FormLayout {
                             root:root,
                         });
                             
-                        textfieldlst.push(obj)
+                        textfieldlst.push(obj);
                     }
                 }
-                firstTimeLoadArgs=false
+                firstTimeLoadArgs=false;
             }else if(sourceName==sh_get_visual_effects){
-                var lst=JSON.parse(data.stdout)
+                var lst=JSON.parse(data.stdout);
                 for(var i in lst)
-                    shaderOptions.append(lst[i])
+                    shaderOptions.append(lst[i]);
                 var ci;
                 // Set a default effect.
                 for(var i=0;i<lst.length;i++)

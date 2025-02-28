@@ -13,19 +13,6 @@ import collections
 Effect = collections.namedtuple('Effect', 'name id path')
 
 
-def _get_shaders(root: Path, root_id):
-    if not root.is_dir():
-        return
-    for _file in root.iterdir():
-        if _file.suffix == '.frag' or any(_file.glob('*.frag')):
-            yield Effect(
-                _file.name,
-            # generate unique effect identities
-                str(root_id) + '.' + _file.name.replace(' ', '_').replace('"', '__').replace("'", '___').replace("$", '____'),
-                str(_file.absolute()),
-            )
-
-
 def get_effects(root: Path):
     if not root.is_dir():
         return

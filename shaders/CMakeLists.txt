@@ -1,6 +1,15 @@
 find_package(Qt6 COMPONENTS ShaderTools REQUIRED)
 
 function(add_shader_raw shader_name glsl_versions)
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${shader_name})
+
+    install(
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/${shader_name}/texture.png
+              ${CMAKE_CURRENT_SOURCE_DIR}/${shader_name}/meta.json
+                ${CMAKE_CURRENT_SOURCE_DIR}/${shader_name}/hint.html
+        DESTINATION plasmoid/contents/shaders/${shader_name}
+        OPTIONAL
+    )
 
     foreach(shader_file IN LISTS ARGN)
         add_custom_command(
@@ -32,11 +41,10 @@ function(add_shader_raw shader_name glsl_versions)
         )
 
         install(
-            FILES ${CMAKE_CURRENT_BINARY_DIR}/${shader_name}/${shader_file}.qsb 
+            FILES ${CMAKE_CURRENT_BINARY_DIR}/${shader_name}/${shader_file}.qsb
             DESTINATION plasmoid/contents/shaders/${shader_name}
         )
 
-        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${shader_name})
     endforeach()
 
 endfunction()
