@@ -97,26 +97,26 @@ Item{
         property int coord_gravity:root.gravity
         property bool coord_inversion:cfg.inversion
 
-        property int iParam0:root.cfg_effectArgValues?.[0] ?? 0
-        property int iParam1:root.cfg_effectArgValues?.[1] ?? 0
-        property int iParam2:root.cfg_effectArgValues?.[2] ?? 0
-        property int iParam3:root.cfg_effectArgValues?.[3] ?? 0
-        property int iParam4:root.cfg_effectArgValues?.[4] ?? 0
-        property int iParam5:root.cfg_effectArgValues?.[5] ?? 0
-        property int iParam6:root.cfg_effectArgValues?.[6] ?? 0
-        property int iParam7:root.cfg_effectArgValues?.[7] ?? 0
-        property int iParam8:root.cfg_effectArgValues?.[8] ?? 0
-        property int iParam9:root.cfg_effectArgValues?.[9] ?? 0
-        property double fParam0:root.cfg_effectArgValues?.[0] ?? 0
-        property double fParam1:root.cfg_effectArgValues?.[1] ?? 0
-        property double fParam2:root.cfg_effectArgValues?.[2] ?? 0
-        property double fParam3:root.cfg_effectArgValues?.[3] ?? 0
-        property double fParam4:root.cfg_effectArgValues?.[4] ?? 0
-        property double fParam5:root.cfg_effectArgValues?.[5] ?? 0
-        property double fParam6:root.cfg_effectArgValues?.[6] ?? 0
-        property double fParam7:root.cfg_effectArgValues?.[7] ?? 0
-        property double fParam8:root.cfg_effectArgValues?.[8] ?? 0
-        property double fParam9:root.cfg_effectArgValues?.[9] ?? 0
+        property int iParam0:cfg.effectArgValues?.[0] ?? 0
+        property int iParam1:cfg.effectArgValues?.[1] ?? 0
+        property int iParam2:cfg.effectArgValues?.[2] ?? 0
+        property int iParam3:cfg.effectArgValues?.[3] ?? 0
+        property int iParam4:cfg.effectArgValues?.[4] ?? 0
+        property int iParam5:cfg.effectArgValues?.[5] ?? 0
+        property int iParam6:cfg.effectArgValues?.[6] ?? 0
+        property int iParam7:cfg.effectArgValues?.[7] ?? 0
+        property int iParam8:cfg.effectArgValues?.[8] ?? 0
+        property int iParam9:cfg.effectArgValues?.[9] ?? 0
+        property double fParam0:cfg.effectArgValues?.[0] ?? 0
+        property double fParam1:cfg.effectArgValues?.[1] ?? 0
+        property double fParam2:cfg.effectArgValues?.[2] ?? 0
+        property double fParam3:cfg.effectArgValues?.[3] ?? 0
+        property double fParam4:cfg.effectArgValues?.[4] ?? 0
+        property double fParam5:cfg.effectArgValues?.[5] ?? 0
+        property double fParam6:cfg.effectArgValues?.[6] ?? 0
+        property double fParam7:cfg.effectArgValues?.[7] ?? 0
+        property double fParam8:cfg.effectArgValues?.[8] ?? 0
+        property double fParam9:cfg.effectArgValues?.[9] ?? 0
 
         anchors.fill: parent
         blending: true
@@ -158,26 +158,26 @@ Item{
             readonly property int coord_gravity:mainSE.coord_gravity
             readonly property bool coord_inversion:mainSE.coord_inversion
 
-            property int iParam0:mainSE.iParam0
-            property int iParam1:mainSE.iParam1
-            property int iParam2:mainSE.iParam2
-            property int iParam3:mainSE.iParam3
-            property int iParam4:mainSE.iParam4
-            property int iParam5:mainSE.iParam5
-            property int iParam6:mainSE.iParam6
-            property int iParam7:mainSE.iParam7
-            property int iParam8:mainSE.iParam8
-            property int iParam9:mainSE.iParam9
-            property int fParam0:mainSE.fParam0
-            property int fParam1:mainSE.fParam1
-            property int fParam2:mainSE.fParam2
-            property int fParam3:mainSE.fParam3
-            property int fParam4:mainSE.fParam4
-            property int fParam5:mainSE.fParam5
-            property int fParam6:mainSE.fParam6
-            property int fParam7:mainSE.fParam7
-            property int fParam8:mainSE.fParam8
-            property int fParam9:mainSE.fParam9
+            readonly property int iParam0:mainSE.iParam0
+            readonly property int iParam1:mainSE.iParam1
+            readonly property int iParam2:mainSE.iParam2
+            readonly property int iParam3:mainSE.iParam3
+            readonly property int iParam4:mainSE.iParam4
+            readonly property int iParam5:mainSE.iParam5
+            readonly property int iParam6:mainSE.iParam6
+            readonly property int iParam7:mainSE.iParam7
+            readonly property int iParam8:mainSE.iParam8
+            readonly property int iParam9:mainSE.iParam9
+            readonly property int fParam0:mainSE.fParam0
+            readonly property int fParam1:mainSE.fParam1
+            readonly property int fParam2:mainSE.fParam2
+            readonly property int fParam3:mainSE.fParam3
+            readonly property int fParam4:mainSE.fParam4
+            readonly property int fParam5:mainSE.fParam5
+            readonly property int fParam6:mainSE.fParam6
+            readonly property int fParam7:mainSE.fParam7
+            readonly property int fParam8:mainSE.fParam8
+            readonly property int fParam9:mainSE.fParam9
 
             fragmentShader:shaderSourceReader.buffer_shader_source
         }

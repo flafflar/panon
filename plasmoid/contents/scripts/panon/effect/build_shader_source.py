@@ -12,9 +12,8 @@ from .. import logger
 import sys
 logger.log('argv: %s', sys.argv[1:])
 
-effect_id, effect_arguments = json.loads(base64.b64decode(sys.argv[1]))
+effect_id = json.loads(base64.b64decode(sys.argv[1]))
 logger.log('effect_id: %s', effect_id)
-logger.log('effect_arguments: %s', effect_arguments)
 
 effect_list = get_effect_list.get_list()
 effect = None

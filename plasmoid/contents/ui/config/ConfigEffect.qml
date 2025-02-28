@@ -89,10 +89,8 @@ Kirigami.FormLayout {
                         var arg=effect_arguments[index]
                         if(!firstTimeLoadArgs)
                             cfg_effectArgValues[index]=arg['default'];
-
-                        console.log(index, 'is', cfg_effectArgValues);
                         
-                        var component
+                        var component;
                         if(arg['type'])
                             component= Qt.createComponent({
                                 "int":"EffectArgumentInt.qml",
