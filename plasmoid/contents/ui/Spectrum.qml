@@ -133,6 +133,12 @@ Item{
         sourceItem: ShaderEffect {
             width: mainSE.iResolution.x
             height: mainSE.iResolution.y
+            readonly property bool colorSpaceHSL: mainSE.colorSpaceHSL
+            readonly property bool colorSpaceHSLuv:mainSE.colorSpaceHSLuv
+            readonly property int hueFrom:mainSE.hueFrom
+            readonly property int hueTo:mainSE.hueTo
+            readonly property int saturation:mainSE.saturation
+            readonly property int lightness:mainSE.lightness
 
             readonly property double iTime:mainSE.iTime
             readonly property double iTimeDelta:mainSE.iTimeDelta
@@ -148,6 +154,9 @@ Item{
             readonly property variant iChannel2:mainSE.iChannel2
             readonly property variant iChannel3:mainSE.iChannel3
             readonly property variant iMouse:mainSE.iMouse
+
+            readonly property int coord_gravity:mainSE.coord_gravity
+            readonly property bool coord_inversion:mainSE.coord_inversion
 
             property int iParam0:mainSE.iParam0
             property int iParam1:mainSE.iParam1

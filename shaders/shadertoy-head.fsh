@@ -24,8 +24,8 @@ layout(std140, binding = 0) uniform _data {
     // sampler2D iChannel1;          // input channel. XX = 2D/Cube
     // sampler2D iChannel2;          // input channel. XX = 2D/Cube
     // sampler2D iChannel3;          // input channel. XX = 2D/Cube
-    vec4      iDate;                 // (year, month, day, time in seconds)
-    #define iDate vec4(0,0,0,0)
+    // vec4      iDate;                 // (year, month, day, time in seconds)
+    // #define iDate vec4(0,0,0,0)
     //float     iSampleRate;           // sound sample rate (i.e., 44100)
     #define iSampleRate 44100
 
