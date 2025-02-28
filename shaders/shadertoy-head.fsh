@@ -24,8 +24,8 @@ layout(std140, binding = 0) uniform _data {
     // sampler2D iChannel1;          // input channel. XX = 2D/Cube
     // sampler2D iChannel2;          // input channel. XX = 2D/Cube
     // sampler2D iChannel3;          // input channel. XX = 2D/Cube
-    vec4      iDate;                 // (year, month, day, time in seconds)
-    #define iDate vec4(0,0,0,0)
+    // vec4      iDate;                 // (year, month, day, time in seconds)
+    // #define iDate vec4(0,0,0,0)
     //float     iSampleRate;           // sound sample rate (i.e., 44100)
     #define iSampleRate 44100
 
@@ -39,6 +39,28 @@ layout(std140, binding = 0) uniform _data {
     // gravity property: North (1), West (4), East (3), South (2)
     int coord_gravity;
     int coord_inversion;
+
+    int iParam0;
+    int iParam1;
+    int iParam2;
+    int iParam3;
+    int iParam4;
+    int iParam5;
+    int iParam6;
+    int iParam7;
+    int iParam8;
+    int iParam9;
+
+    float fParam0;
+    float fParam1;
+    float fParam2;
+    float fParam3;
+    float fParam4;
+    float fParam5;
+    float fParam6;
+    float fParam7;
+    float fParam8;
+    float fParam9;
 };
 
 layout(binding = 1) uniform sampler2D iChannel0;

@@ -94,9 +94,29 @@ Item{
         readonly property variant iChannel2:bufferSES
         readonly property variant iChannel3:Image{source:'file://'+shaderSourceReader.texture_uri}
 
-
         property int coord_gravity:root.gravity
         property bool coord_inversion:cfg.inversion
+
+        property int iParam0:cfg.effectArgValues?.[0] ?? 0
+        property int iParam1:cfg.effectArgValues?.[1] ?? 0
+        property int iParam2:cfg.effectArgValues?.[2] ?? 0
+        property int iParam3:cfg.effectArgValues?.[3] ?? 0
+        property int iParam4:cfg.effectArgValues?.[4] ?? 0
+        property int iParam5:cfg.effectArgValues?.[5] ?? 0
+        property int iParam6:cfg.effectArgValues?.[6] ?? 0
+        property int iParam7:cfg.effectArgValues?.[7] ?? 0
+        property int iParam8:cfg.effectArgValues?.[8] ?? 0
+        property int iParam9:cfg.effectArgValues?.[9] ?? 0
+        property double fParam0:cfg.effectArgValues?.[0] ?? 0
+        property double fParam1:cfg.effectArgValues?.[1] ?? 0
+        property double fParam2:cfg.effectArgValues?.[2] ?? 0
+        property double fParam3:cfg.effectArgValues?.[3] ?? 0
+        property double fParam4:cfg.effectArgValues?.[4] ?? 0
+        property double fParam5:cfg.effectArgValues?.[5] ?? 0
+        property double fParam6:cfg.effectArgValues?.[6] ?? 0
+        property double fParam7:cfg.effectArgValues?.[7] ?? 0
+        property double fParam8:cfg.effectArgValues?.[8] ?? 0
+        property double fParam9:cfg.effectArgValues?.[9] ?? 0
 
         anchors.fill: parent
         blending: true
@@ -113,6 +133,12 @@ Item{
         sourceItem: ShaderEffect {
             width: mainSE.iResolution.x
             height: mainSE.iResolution.y
+            readonly property bool colorSpaceHSL: mainSE.colorSpaceHSL
+            readonly property bool colorSpaceHSLuv:mainSE.colorSpaceHSLuv
+            readonly property int hueFrom:mainSE.hueFrom
+            readonly property int hueTo:mainSE.hueTo
+            readonly property int saturation:mainSE.saturation
+            readonly property int lightness:mainSE.lightness
 
             readonly property double iTime:mainSE.iTime
             readonly property double iTimeDelta:mainSE.iTimeDelta
@@ -128,6 +154,31 @@ Item{
             readonly property variant iChannel2:mainSE.iChannel2
             readonly property variant iChannel3:mainSE.iChannel3
             readonly property variant iMouse:mainSE.iMouse
+
+            readonly property int coord_gravity:mainSE.coord_gravity
+            readonly property bool coord_inversion:mainSE.coord_inversion
+
+            readonly property int iParam0:mainSE.iParam0
+            readonly property int iParam1:mainSE.iParam1
+            readonly property int iParam2:mainSE.iParam2
+            readonly property int iParam3:mainSE.iParam3
+            readonly property int iParam4:mainSE.iParam4
+            readonly property int iParam5:mainSE.iParam5
+            readonly property int iParam6:mainSE.iParam6
+            readonly property int iParam7:mainSE.iParam7
+            readonly property int iParam8:mainSE.iParam8
+            readonly property int iParam9:mainSE.iParam9
+            readonly property int fParam0:mainSE.fParam0
+            readonly property int fParam1:mainSE.fParam1
+            readonly property int fParam2:mainSE.fParam2
+            readonly property int fParam3:mainSE.fParam3
+            readonly property int fParam4:mainSE.fParam4
+            readonly property int fParam5:mainSE.fParam5
+            readonly property int fParam6:mainSE.fParam6
+            readonly property int fParam7:mainSE.fParam7
+            readonly property int fParam8:mainSE.fParam8
+            readonly property int fParam9:mainSE.fParam9
+
             fragmentShader:shaderSourceReader.buffer_shader_source
         }
     }

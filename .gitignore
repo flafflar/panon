@@ -13,6 +13,7 @@ __pycache__/
 .Python
 env/
 build/
+build-translations/
 develop-eggs/
 dist/
 downloads/
@@ -102,3 +103,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# compiled shaders
+*.qsb
+/plasmoid/contents/shaders

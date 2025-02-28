@@ -13,24 +13,19 @@ import collections
 Effect = collections.namedtuple('Effect', 'name id path')
 
 
-def _get_shaders(root: Path, root_id):
+def get_effects(root: Path):
     if not root.is_dir():
         return
-    for _file in root.iterdir():
-        if _file.suffix == '.frag' or any(_file.glob('*.frag')):
-            yield Effect(
-                _file.name,
-            # generate unique effect identities
-                str(root_id) + '.' + _file.name.replace(' ', '_').replace('"', '__').replace("'", '___').replace("$", '____'),
-                str(_file.absolute()),
-            )
 
+    for f in root.iterdir():
+        if any(f.glob('*.qsb')):
+            yield Effect(f.name, f.name, str(f.absolute()))
 
 def get_list():
     """
     Returns an array of all available visual effects.
     """
-    return sorted([effect for effect_dir_id, effect_dir in enumerate(effect_dirs) for effect in _get_shaders(effect_dir, effect_dir_id)])
+    return sorted([effect for effect_dir in effect_dirs for effect in get_effects(effect_dir)])
 
 
 if __name__ == '__main__':

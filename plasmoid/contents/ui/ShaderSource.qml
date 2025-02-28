@@ -29,7 +29,7 @@ Plasma5Support.DataSource {
 
     readonly property string cmd:Utils.chdir_scripts_root()
         + 'python3 -m panon.effect.build_shader_source'
-        + ' '+Qt.btoa(JSON.stringify([cfg.visualEffect,cfg.effectArgValues]))
+        + ' '+Qt.btoa(JSON.stringify(cfg.visualEffect))
 
     connectedSources: [cmd]
 
