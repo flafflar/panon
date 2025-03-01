@@ -20,4 +20,4 @@ cmake ..
 make
 cd ..
 
-zip -r panon.plasmoid ./plasmoid 
+zip -r panon.plasmoid ./build/plasmoid
