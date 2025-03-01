@@ -16,8 +16,8 @@ rm ./panon.plasmoid -f
 rm -rf build
 mkdir -p build
 cd build
-CMAKE_INSTALL_PREFIX="../" cmake ..
-make install
+cmake ..
+make
 cd ..
 
 zip -r panon.plasmoid ./plasmoid 
