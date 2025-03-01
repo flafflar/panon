@@ -18,6 +18,7 @@ CMAKE_INSTALL_PREFIX="./dist" cmake ..
 make install
 cd ..
 
+rm -f ./build/dist/third_party
 ln -s ../../third_party ./build/dist/third_party
 
 cd build/dist
