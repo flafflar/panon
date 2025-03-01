@@ -23,7 +23,6 @@ function(add_shader_raw shader_name glsl_versions)
 
         add_custom_target(
             ${shader_name}_${shader_file}.frag
-            DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${shader_name}/${shader_file}.frag
         )
 
         add_custom_command(
@@ -37,7 +36,6 @@ function(add_shader_raw shader_name glsl_versions)
 
         add_custom_target(
             ${shader_name}_${shader_file}.qsb ALL
-            DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${shader_name}/${shader_file}.qsb
         )
 
         install(
