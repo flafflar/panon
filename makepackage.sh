@@ -10,19 +10,18 @@ if [ ! -f "third_party/hsluv-glsl/hsluv-glsl.fsh" ];then
 fi
 
 # Remove caches
-rm ./plasmoid/contents/scripts/__pycache__/ -rf
-rm ./plasmoid/contents/scripts/*/__pycache__/ -rf
-rm ./plasmoid/contents/scripts/*/*/__pycache__/ -rf
-rm ./plasmoid/contents/scripts/*/*/*/__pycache__/ -rf
+find ./plasmoid -name __pycache__ -type d -exec rm -rf {} \;
 rm ./panon.plasmoid -f
 
 # i18n
+rm -rf build-translations
 mkdir -p build-translations
 cd build-translations
 cmake ../translations
 make install DESTDIR=../plasmoid/contents/locale
 cd ..
 
+rm -rf build
 mkdir -p build
 cd build
 CMAKE_INSTALL_PREFIX="../" cmake ..
