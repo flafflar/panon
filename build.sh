@@ -3,10 +3,9 @@
 set -euo pipefail
 
 #Verify the existence of third party files before packaging.
-if [ ! -f "third_party/hsluv-glsl/hsluv-glsl.fsh" ];then
+if [ ! -f "third_party/hsluv-glsl/hsluv-glsl.fsh" ]; then
     echo "Cannot find third party files."
-	git submodule update --init
-
+    git submodule update --init
 fi
 
 # Remove caches
