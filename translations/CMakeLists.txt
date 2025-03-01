@@ -26,7 +26,7 @@ ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
                         ADD_CUSTOM_COMMAND(TARGET translations
                                 COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --check -o ${_gmoFile} ${_poFile}
                                 DEPENDS ${_poFile})
-                        INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_langCode}/LC_MESSAGES/ RENAME ${catalogname}.mo)
+                        INSTALL(FILES ${_gmoFile} DESTINATION plasmoid/contents/locale/${_langCode}/LC_MESSAGES/ RENAME ${catalogname}.mo)
                         LIST(APPEND GMO_FILES ${_gmoFile})
                 ENDIF( _langCode )
 

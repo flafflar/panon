@@ -9,6 +9,7 @@ find_package(Plasma REQUIRED VERSION 6)
 find_package(KF6 REQUIRED COMPONENTS I18n)
 
 add_subdirectory(shaders)
+add_subdirectory(translations)
 
 install(DIRECTORY plasmoid DESTINATION .)
 
