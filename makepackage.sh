@@ -11,13 +11,14 @@ fi
 
 # Remove caches
 find ./plasmoid -name __pycache__ -type d -exec rm -rf {} \;
-rm ./panon.plasmoid -f
+rm ./build/dist/panon.plasmoid -f
 
-rm -rf build
 mkdir -p build
 cd build
-cmake ..
-make
+CMAKE_INSTALL_PREFIX="./dist" cmake ..
+make install
 cd ..
 
-zip -r panon.plasmoid ./build/plasmoid
+cd build/dist
+zip -r panon.plasmoid ./plasmoid
+echo 'SUCCESS! Created ./build/dist/panon.plasmoid'
