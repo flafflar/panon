@@ -97,26 +97,26 @@ Item{
         property int coord_gravity:root.gravity
         property bool coord_inversion:cfg.inversion
 
-        property int iParam0:cfg.effectArgValues?.[0] ?? 0
-        property int iParam1:cfg.effectArgValues?.[1] ?? 0
-        property int iParam2:cfg.effectArgValues?.[2] ?? 0
-        property int iParam3:cfg.effectArgValues?.[3] ?? 0
-        property int iParam4:cfg.effectArgValues?.[4] ?? 0
-        property int iParam5:cfg.effectArgValues?.[5] ?? 0
-        property int iParam6:cfg.effectArgValues?.[6] ?? 0
-        property int iParam7:cfg.effectArgValues?.[7] ?? 0
-        property int iParam8:cfg.effectArgValues?.[8] ?? 0
-        property int iParam9:cfg.effectArgValues?.[9] ?? 0
-        property double fParam0:cfg.effectArgValues?.[0] ?? 0
-        property double fParam1:cfg.effectArgValues?.[1] ?? 0
-        property double fParam2:cfg.effectArgValues?.[2] ?? 0
-        property double fParam3:cfg.effectArgValues?.[3] ?? 0
-        property double fParam4:cfg.effectArgValues?.[4] ?? 0
-        property double fParam5:cfg.effectArgValues?.[5] ?? 0
-        property double fParam6:cfg.effectArgValues?.[6] ?? 0
-        property double fParam7:cfg.effectArgValues?.[7] ?? 0
-        property double fParam8:cfg.effectArgValues?.[8] ?? 0
-        property double fParam9:cfg.effectArgValues?.[9] ?? 0
+        readonly property int iParam0:cfg.effectArgValues?.[0] ?? 0
+        readonly property int iParam1:cfg.effectArgValues?.[1] ?? 0
+        readonly property int iParam2:cfg.effectArgValues?.[2] ?? 0
+        readonly property int iParam3:cfg.effectArgValues?.[3] ?? 0
+        readonly property int iParam4:cfg.effectArgValues?.[4] ?? 0
+        readonly property int iParam5:cfg.effectArgValues?.[5] ?? 0
+        readonly property int iParam6:cfg.effectArgValues?.[6] ?? 0
+        readonly property int iParam7:cfg.effectArgValues?.[7] ?? 0
+        readonly property int iParam8:cfg.effectArgValues?.[8] ?? 0
+        readonly property int iParam9:cfg.effectArgValues?.[9] ?? 0
+        readonly property double fParam0:cfg.effectArgValues?.[0] ?? 0
+        readonly property double fParam1:cfg.effectArgValues?.[1] ?? 0
+        readonly property double fParam2:cfg.effectArgValues?.[2] ?? 0
+        readonly property double fParam3:cfg.effectArgValues?.[3] ?? 0
+        readonly property double fParam4:cfg.effectArgValues?.[4] ?? 0
+        readonly property double fParam5:cfg.effectArgValues?.[5] ?? 0
+        readonly property double fParam6:cfg.effectArgValues?.[6] ?? 0
+        readonly property double fParam7:cfg.effectArgValues?.[7] ?? 0
+        readonly property double fParam8:cfg.effectArgValues?.[8] ?? 0
+        readonly property double fParam9:cfg.effectArgValues?.[9] ?? 0
 
         anchors.fill: parent
         blending: true
