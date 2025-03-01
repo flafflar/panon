@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-./makepackage.sh
+./build.sh
 
 if [ -f "third_party/hsluv-glsl/hsluv-glsl.fsh" ];then
     plasmoidviewer --applet ./build/dist/plasmoid/
