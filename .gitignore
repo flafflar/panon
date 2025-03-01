@@ -103,7 +103,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-
-# compiled shaders
-*.qsb
-/plasmoid/contents/shaders
