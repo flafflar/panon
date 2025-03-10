@@ -1,9 +1,13 @@
+#version 440
+include(shadertoy-head.fsh)
+include(utils.fsh)
+
 /*
  * Inspired by OieIcons
  * https://store.kde.org/p/1299058/
  */
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
     vec4 sample_prev= texture(iChannel1, vec2((fragCoord.x-1)/iResolution.x,0)) ;
     vec4 sample_    = texture(iChannel1, vec2(fragCoord.x  /iResolution.x,0)) ;
@@ -24,3 +28,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         fragColor.a=1;
     }
 }
+
+include(shadertoy-foot.fsh)

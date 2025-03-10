@@ -1,12 +1,17 @@
-#version 130
+#version 440
 
-out vec4 out_Color;
-in mediump vec2 qt_TexCoord0;
+layout(location = 0) out vec4 out_Color;
+layout(location = 0) in vec2 qt_TexCoord0;
 
-uniform sampler2D waveBuffer; 
+layout(binding = 1) uniform sampler2D waveBuffer; 
 
-uniform int     dftSize;
-uniform int     bufferSize;
+layout(std140, binding = 0) uniform _data {
+    mat4 qt_Matrix;
+    float qt_Opacity;
+
+    int dftSize;
+    int bufferSize;
+};
 
 #define PI 3.14159265359
 
