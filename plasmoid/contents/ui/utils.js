@@ -20,7 +20,8 @@ function create_venv() {
         'test -d venv || python3 -m venv venv;' +
         '. venv/bin/activate;' +
         'pip install -r requirements.txt;' +
-        'touch venv/.created;'
+        'touch venv/.created;' +
+        'echo "venv_created"'
     )
 }
 
