@@ -1,9 +1,9 @@
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasma5support as Plasma5Support
 import "utils.js" as Utils
 /*
  * Create virtual environment for auto-installing dependencies.
  */
-PlasmaCore.DataSource {
+Plasma5Support.DataSource {
     engine: 'executable'
     property bool isCreated: false
     readonly property string createVenv:Utils.create_venv()
