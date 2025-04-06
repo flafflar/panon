@@ -27,7 +27,7 @@ Plasma5Support.DataSource {
 
     readonly property bool enable_buffer:buffer_shader_source.length>0
 
-    readonly property string cmd:Utils.chdir_scripts_root()
+    readonly property string cmd:Utils.activate_venv()
         + 'python3 -m panon.effect.build_shader_source'
         + ' '+Qt.btoa(JSON.stringify([cfg.visualEffect,cfg.effectArgValues]))
 

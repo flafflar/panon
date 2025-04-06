@@ -176,8 +176,8 @@ Kirigami.FormLayout {
         }
     }
 
-    readonly property string sh_get_devices:Utils.chdir_scripts_root()+'python3 -m panon.backend.get_devices'
-    readonly property string sh_get_pa_devices:Utils.chdir_scripts_root()+'python3 -m panon.backend.get_pa_devices'
+    readonly property string sh_get_devices:Utils.activate_venv()+'python3 -m panon.backend.get_devices'
+    readonly property string sh_get_pa_devices:Utils.activate_venv()+'python3 -m panon.backend.get_pa_devices'
 
     Plasma5Support.DataSource {
         //id: getOptionsDS

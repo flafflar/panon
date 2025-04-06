@@ -34,7 +34,7 @@ Item{
     readonly property string startBackEnd:{
         if(server.port==0) return '';
         if(shaderSourceReader.image_shader_source=='') return ''
-        var cmd=Utils.chdir_scripts_root()+'exec python3 -m panon.backend.client '
+        var cmd=Utils.activate_venv()+'exec python3 -m panon.backend.client '
         cmd+=server.url  //+':'+server.port
         var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
