@@ -15,29 +15,26 @@ your distro.
 
 ## Dependencies
 
+On first run, the plasmoid will create a venv and install Python dependencies automatically.
+
 ### KDE Neon
 ```sh
-sudo apt install qt6-websockets \
-    python3-docopt python3-pyaudio python3-pip
-sudo pip install --upgrade websockets
+sudo apt install qt6-websockets python3-pip python3-venv
 ```
 
 ### OpenSUSE
 ```sh
-sudo zypper in qt6-shadertools qt6-websockets-imports \ 
-    python3-docopt python3-numpy python3-PyAudio python3-websockets
+sudo zypper in qt6-shadertools qt6-websockets-imports
 ```
 
 ### Nobara
 ```sh
-sudo dnf install qt6-qtwebsockets-devel qt6-qtshadertools \
-    python3-docopt python3-numpy python3-pyaudio python3-websockets
+sudo dnf install qt6-qtwebsockets-devel qt6-qtshadertools
 ```
 
 ### Arch Linux
 ```sh
-sudo pacman -S --asdeps qt6-shadertools qt6-websockets \
-    python-websockets python-docopt python-numpy python-pyaudio
+sudo pacman -S --asdeps qt6-shadertools qt6-websockets
 ```
 You can also install the [AUR package](https://aur.archlinux.org/packages/plasma6-applets-panon)
 directly!
