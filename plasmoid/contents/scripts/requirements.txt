@@ -1,0 +1,5 @@
+docopt
+numpy
+pyaudio
+cffi
+websockets
