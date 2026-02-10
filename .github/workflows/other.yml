@@ -1,0 +1,58 @@
+name: other
+on: [push]
+
+jobs:
+  build-kubuntu2510:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:25.10
+    steps:
+      - name: Install utility packages
+        run: |
+          apt-get update
+          apt-get install -y git dpkg-dev debhelper git-buildpackage
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          path: panon
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Determine project version
+        working-directory: panon
+        run: |
+          PANON_VERSION=$(git describe --long --tags --abbrev=7 | sed 's/^v//;s/-/.r/;s/-/./')
+          echo ${PANON_VERSION}
+          echo "PANON_VERSION=${PANON_VERSION}" >> "${GITHUB_ENV}"
+      - name: Prepare directory for Debian packaging
+        working-directory: panon
+        run: |
+          cp -r pkg/kubuntu25.10/debian .
+      - name: Install build dependencies
+        working-directory: panon
+        run: apt-get build-dep -y .
+      - name: Set package version
+        working-directory: panon
+        env:
+          USER: ${{ github.actor }}
+        run: |
+          # Try to find the user's email in the git commits
+          EMAIL=$(git log --author=${USER} --max-count=1 --format=%ae HEAD)
+          if [ -z ${EMAIL} ]; then
+            EMAIL=${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+          fi
+          export EMAIL
+          gbp dch \
+            --debian-branch=$(git rev-parse --abbrev-ref HEAD) \
+            --debian-tag='v%(version)s' \
+            --new-version=${PANON_VERSION}
+      - name: Build package
+        working-directory: panon
+        run: dpkg-buildpackage
+      - name: Upload package as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: panon_${{ env.PANON_VERSION }}_amd64.deb
+          path: panon_${{ env.PANON_VERSION }}_amd64.deb
+          compression-level: 0
+          if-no-files-found: error
+
