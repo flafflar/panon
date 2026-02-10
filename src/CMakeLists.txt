@@ -1,0 +1,24 @@
+add_subdirectory(plugin)
+
+add_plasmoid(xyz.flafflar.panon
+  METADATA plasmoid/metadata.json
+)
+
+add_subdirectory(plasmoid)
+
+find_program(PLASMOIDVIEWER NAMES plasmoidviewer OPTIONAL)
+
+if(PLASMOIDVIEWER MATCHES "NOTFOUND$")
+  message(WARNING "Could not find the plasmoidviewer executable. The launch\
+  command that is used to test the plasmoid will not be available.")
+else()
+  add_custom_target(launch
+    DEPENDS
+      plugin_installed
+    COMMAND ${CMAKE_COMMAND}
+      -E env
+      QML_IMPORT_PATH=${CMAKE_BINARY_DIR}
+      ${PLASMOIDVIEWER}
+      --applet ${CMAKE_CURRENT_SOURCE_DIR}/plasmoid
+  )
+endif()

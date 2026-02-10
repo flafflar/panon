@@ -1,0 +1,15 @@
+#include "PanonPlugin.h"
+
+#include "AudioBackend.h"
+#include "ShaderWidget.h"
+#include "WaveTexture.h"
+#include "WaveViewer.h"
+
+void PanonPlugin::registerTypes(const char *uri) {
+  Q_ASSERT(QLatin1String(uri) == QLatin1String("xyz.flafflar.panon"));
+
+  qmlRegisterType<AudioBackend>(uri, 1, 0, "AudioBackend");
+  qmlRegisterType<ShaderWidget>(uri, 1, 0, "ShaderWidget");
+  qmlRegisterType<WaveTexture>(uri, 1, 0, "WaveTexture");
+  qmlRegisterType<WaveViewer>(uri, 1, 0, "WaveViewer");
+}

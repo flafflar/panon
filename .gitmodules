@@ -4,3 +4,6 @@
 [submodule "hsluv-glsl"]
 	path = third_party/hsluv-glsl
 	url = https://github.com/williammalo/hsluv-glsl
+[submodule "pkg/archlinux/aur"]
+	path = pkg/archlinux/aur
+	url = aur.archlinux.org:plasma6-applets-panon
