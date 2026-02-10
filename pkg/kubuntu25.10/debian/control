@@ -1,0 +1,25 @@
+Source: panon
+Section: kde
+Priority: optional
+Maintainer: flafflar <achmichail@gmail.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ g++,
+ cmake,
+ extra-cmake-modules,
+ qt6-declarative-dev,
+ qt6-multimedia-dev,
+ libkf6config-dev,
+ libkf6i18n-dev,
+ libplasma-dev,
+ libpulse-dev,
+Standards-Version: 4.7.2
+Homepage: https://github.com/flafflar/panon
+
+Package: panon
+Architecture: amd64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: An audio visualizer widget for KDE Plasma.
