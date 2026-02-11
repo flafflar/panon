@@ -1,5 +1,5 @@
 # We need extra-cmake-modules to get the KDEInstallDirs module.
-find_package(ECM REQUIRED NO_MODULE)
+find_package(ECM "6.0.0" REQUIRED NO_MODULE)
 list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
