@@ -102,3 +102,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Output directories of local Docker builds
+pkg/**/out
