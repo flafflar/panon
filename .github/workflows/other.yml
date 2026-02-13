@@ -55,4 +55,41 @@ jobs:
           path: panon_${{ env.PANON_VERSION }}_amd64.deb
           compression-level: 0
           if-no-files-found: error
-
+  build-archlinux:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+    steps:
+      - name: Install utility packages
+        run: pacman -Syu --noconfirm git
+      - name: Create non-root user
+        run: |
+          useradd --no-create-home builduser
+          echo "builduser ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/builduser
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          path: panon
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Determine project version
+        working-directory: panon
+        run: |
+          PANON_VERSION=$(./version.sh)
+          echo ${PANON_VERSION}
+          echo "PANON_VERSION=${PANON_VERSION}" >> "${GITHUB_ENV}"
+      - name: Change permissions on repo
+        working-directory: panon
+        run: chown builduser:root -R . --verbose
+      - name: Make package
+        working-directory: panon/pkg/archlinux
+        run: runuser -u builduser -- makepkg --syncdeps --noconfirm
+      - name: Upload package as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: panon-${{ env.PANON_VERSION }}-archlinux
+          path: |
+            panon/pkg/archlinux/panon-${{ env.PANON_VERSION }}-1-x86_64.pkg.tar.zst
+            panon/pkg/archlunux/panon-debug-${{ env.PANON_VERSION }}-1-x86_64.pkg.tar.zst
+          compression-level: 0
+          if-no-files-found: error

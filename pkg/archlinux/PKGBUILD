@@ -1,0 +1,47 @@
+# Maintainer: flafflar <achmichail@gmail.com>
+pkgname=panon
+pkgver=6.0.1.r7.g294129c.dirty
+pkgrel=1
+pkgdesc="An audio visualizer widget for KDE Plasma"
+arch=('x86_64')
+url="https://github.com/flafflar/${pkgname}"
+license=('GPL-3.0-only')
+groups=()
+depends=()
+makedepends=('git' 'cmake>=3.16.0' 'extra-cmake-modules>=6.0.0'
+	'qt6-declarative>=6.0.0' 'qt6-multimedia>=6.0.0' 'kconfig>=6.0.0'
+	'ki18n>=6.0.0' 'libplasma')
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+source=()
+noextract=()
+sha256sums=()
+
+# IMPORTANT: This is NOT intended for end users to build the package. This is
+# only for developers that want to package their local build into a package for
+# testing purposes.
+
+pkgver() {
+	cd "${startdir}/../.."
+	./version.sh
+}
+
+build() {
+	cd "${startdir}/../.."
+
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr
+
+	cmake --build build
+}
+
+package() {
+	cd "${startdir}/../.."
+
+	DESTDIR="${pkgdir}" cmake --install build
+}
