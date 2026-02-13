@@ -1,4 +1,4 @@
-name: other
+name: main
 on: [push]
 
 jobs:
