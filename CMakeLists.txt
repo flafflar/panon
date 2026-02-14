@@ -19,11 +19,13 @@ include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 
-find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
-    Quick
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED
+  COMPONENTS
     Core
+    Quick
     Widgets
     Multimedia
+    ShaderTools
 )
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS

@@ -63,6 +63,9 @@ function(__plasmoid_add_file NAME PREFIX FILE)
     message(FATAL_ERROR "PREFIX should start with a slash")
   endif()
 
+  # Convert FILE into an absolute path.
+  cmake_path(ABSOLUTE_PATH FILE BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
   # We have verified above that PREFIX starts with a slash, so it's safe to
   # concatenate the paths like this.
   set(OUT_PATH ${CMAKE_BINARY_DIR}/plasmoids/${NAME}/contents${PREFIX})
@@ -84,10 +87,10 @@ function(__plasmoid_add_file NAME PREFIX FILE)
     # Copy the file.
     COMMAND ${CMAKE_COMMAND}
       -E copy_if_different
-      ${CMAKE_CURRENT_SOURCE_DIR}/${FILE}
+      ${FILE}
       ${OUT_PATH}
     DEPENDS
-      ${CMAKE_CURRENT_SOURCE_DIR}/${FILE}
+      ${FILE}
   )
 
   # Create a target name by taking the output path relative to CMAKE_BINARY_DIR

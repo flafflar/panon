@@ -7,6 +7,8 @@ add_plasmoid(xyz.flafflar.panon
 
 add_subdirectory(plasmoid)
 
+add_subdirectory(shaders)
+
 find_program(PLASMOIDVIEWER NAMES plasmoidviewer OPTIONAL)
 
 if(PLASMOIDVIEWER MATCHES "NOTFOUND$")

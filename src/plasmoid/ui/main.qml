@@ -7,9 +7,11 @@ import xyz.flafflar.panon
 PlasmoidItem {
   id: root
 
-
   fullRepresentation: RowLayout {
     anchors.fill: parent
+
+    Layout.preferredWidth: 700
+    Layout.maximumWidth: 700
 
     AudioBackend {
       id: audioBackend
@@ -27,16 +29,27 @@ PlasmoidItem {
     WaveTexture {
       id: waveTexture
       audioBackend: audioBackend
+      visible: false
     }
 
-    WaveViewer {
-      id: waveViewer
+    ShaderEffectSource {
+      id: waveTextureSource
+      sourceItem: waveTexture
+      width: waveTexture.width
+      height: waveTexture.height
+      visible: false
+    }
+
+    ShaderEffect {
+      id: mainShader
+
       Layout.fillWidth: true
       Layout.fillHeight: true
 
-      waveColor: "white"
+      property variant iResolution: Qt.vector3d(mainShader.width, mainShader.height, 1)
+      property variant iChannel0: waveTextureSource
 
-      audioBackend: audioBackend
+      fragmentShader: "../shaders/wave.frag.qsb"
     }
   } 
 }
