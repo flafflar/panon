@@ -2,6 +2,7 @@ add_subdirectory(plugin)
 
 add_plasmoid(xyz.flafflar.panon
   METADATA plasmoid/metadata.json
+  OUTPUT_TARGET plasmoid_target
 )
 
 add_subdirectory(plasmoid)
@@ -15,10 +16,11 @@ else()
   add_custom_target(launch
     DEPENDS
       plugin_installed
+      ${plasmoid_target}
     COMMAND ${CMAKE_COMMAND}
       -E env
       QML_IMPORT_PATH=${CMAKE_BINARY_DIR}
       ${PLASMOIDVIEWER}
-      --applet ${CMAKE_CURRENT_SOURCE_DIR}/plasmoid
+      --applet ${CMAKE_BINARY_DIR}/plasmoids/xyz.flafflar.panon
   )
 endif()

@@ -19,7 +19,7 @@ function(add_plasmoid NAME)
     PARSE_ARGV 1
     args
     ""
-    "METADATA"
+    "METADATA;OUTPUT_TARGET"
     ""
   )
 
@@ -52,6 +52,10 @@ function(add_plasmoid NAME)
     ${NAME}
     plasmoids
   )
+
+  if(DEFINED args_OUTPUT_TARGET)
+    set(${args_OUTPUT_TARGET} plasmoid_${NAME} PARENT_SCOPE)
+  endif()
 endfunction()
 
 function(__plasmoid_add_file NAME PREFIX FILE)
