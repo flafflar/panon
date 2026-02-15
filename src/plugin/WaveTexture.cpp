@@ -28,8 +28,6 @@ void WaveTexture::setAudioBackend(AudioBackend *audioBackend) {
 /*** Drawing ***/
 
 void WaveTexture::updateTexture() {
-  qDebug() << "Updating the texture...";
-
   // Draw the texture in the stored image.
   this->drawTextureImage();
 
