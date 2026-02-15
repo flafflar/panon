@@ -1,10 +1,9 @@
 #include "WaveTexture.h"
-#include "AudioBackend.h"
-#include "PulseAudioBackend.h"
 
 #include <QPainter>
-#include <qlogging.h>
-#include <qpoint.h>
+
+#include "AudioBackend.h"
+#include "PulseAudioBackend.h"
 
 WaveTexture::WaveTexture(QQuickItem *parent)
     : QQuickPaintedItem(parent), m_textureImage(0, 0, QImage::Format_RGBA8888) {
@@ -42,11 +41,48 @@ void WaveTexture::updateTexture() {
   this->update(QRect(0, 0, this->width(), this->height()));
 }
 
+/**
+ * Converts an audio sample (that is in the range [-1, 1]) to a pixel color
+ * (that is in the range [0, 255]).
+ *
+ * This function uses the same conversion that PulseAudio uses to convert
+ * float32 audio samples to u8 audio samples. This means that the range of the
+ * output is not exactly [0, 255], because -1.0 maps to 1 instead of 0. 0 can
+ * still appear though, in case the sample is less than -1.0. See the table
+ * below for some example values.
+ *
+ * +--------+--------+
+ * | sample | output |
+ * +--------+--------+
+ * |  -1.0  |     1  |
+ * |   0.0  |   128  |
+ * |   1.0  |   255  |
+ * +--------+--------+
+ *
+ * @param sample The sample in the range [-1, 1] to convert. The sample is
+ * allowed to be outside of the range [-1, 1], but it will be clamped if this is
+ * the case.
+ *
+ * @return The sample converted in the [0, 255] range.
+ */
+uchar sampleToColor(const float sample) {
+  float value = (sample * 127.0) + 128.0;
+
+  // Clamp the value to [0, 255]
+  if (value > 255.0) [[unlikely]] {
+    value = 255.0;
+  } else if (value < 0.0) [[unlikely]] {
+    value = 0.0;
+  }
+
+  return std::rint(value);
+}
+
 void WaveTexture::drawTextureImage() {
   PulseAudioBackend *backend = this->m_audioBackend->backend();
 
-  std::vector<uint8_t> leftBuffer = backend->leftBuffer();
-  std::vector<uint8_t> rightBuffer = backend->rightBuffer();
+  std::vector<float> leftBuffer = backend->leftBuffer();
+  std::vector<float> rightBuffer = backend->rightBuffer();
 
   // The width of the image, which is also the number of samples in the buffer
   // (1 sample = 1 pixel).
@@ -61,9 +97,9 @@ void WaveTexture::drawTextureImage() {
 
   for (int i = 0; i < width; i++) {
     // The red channel is the left channel.
-    imageBuffer[0] = leftBuffer[i];
+    imageBuffer[0] = sampleToColor(leftBuffer[i]);
     // The green channel is the right channel.
-    imageBuffer[1] = rightBuffer[i];
+    imageBuffer[1] = sampleToColor(rightBuffer[i]);
     // The blue channel is not used, so leave it to 0.
     imageBuffer[2] = 0;
     // The alpha channel is not used, but we set it to 255 so we can visually

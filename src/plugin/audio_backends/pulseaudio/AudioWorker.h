@@ -3,12 +3,13 @@
 #include <QObject>
 
 #include <cstdint>
+#include <limits>
 #include <memory>
-#include <pulse/def.h>
 #include <ranges>
 #include <vector>
 
 #include <pulse/context.h>
+#include <pulse/def.h>
 #include <pulse/introspect.h>
 #include <pulse/mainloop.h>
 #include <pulse/proplist.h>
@@ -16,6 +17,12 @@
 
 // TODO: Make this header private somehow?
 #include "PulseAudioDeviceInfo.h"
+
+static_assert(
+    std::numeric_limits<float>::is_iec559,
+    "The float type must be of the IEEE 754 standard for this library to work");
+static_assert(sizeof(float) * 8 == 32,
+              "The float type must have a width of exactly 32 bits");
 
 class AudioWorker : public QObject {
   Q_OBJECT
@@ -33,8 +40,8 @@ public:
   }
 
   // TODO: Performance? Does this copy the vector?
-  std::vector<uint8_t> getLeftBuffer() const { return this->bufferLeft; }
-  std::vector<uint8_t> getRightBuffer() const { return this->bufferRight; }
+  std::vector<float> getLeftBuffer() const { return this->bufferLeft; }
+  std::vector<float> getRightBuffer() const { return this->bufferRight; }
 
   void setCurrentDevice(std::shared_ptr<PulseAudioDeviceInfo> device);
 
@@ -64,9 +71,9 @@ private:
   void updateStreamFps();
 
   // The buffer for the left audio channel.
-  std::vector<std::uint8_t> bufferLeft;
+  std::vector<float> bufferLeft;
   // The buffer for the right audio channel.
-  std::vector<std::uint8_t> bufferRight;
+  std::vector<float> bufferRight;
 
   // The callback invoked from libpulse when the context changes state.
   static void contextStateCallback(pa_context *context, void *data);

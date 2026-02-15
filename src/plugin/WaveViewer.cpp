@@ -58,8 +58,8 @@ void WaveViewer::paint(QPainter *painter) {
 
   PulseAudioBackend *backend = this->m_audioBackend->backend();
 
-  std::vector<uint8_t> leftBuffer = backend->leftBuffer();
-  std::vector<uint8_t> rightBuffer = backend->rightBuffer();
+  std::vector<float> leftBuffer = backend->leftBuffer();
+  std::vector<float> rightBuffer = backend->rightBuffer();
 
   /*
   painter->fillRect(QRectF(0, 0, this->width(), this->height()),
@@ -70,11 +70,8 @@ void WaveViewer::paint(QPainter *painter) {
   qreal dx = width / leftBuffer.size();
 
   for (size_t i = 0; i < leftBuffer.size(); i++) {
-    // Convert the samples into the [-1, 1] interval.
-    qreal sampleLeft = leftBuffer[i] / 128.0 - 1.0;
-    qreal sampleRight = rightBuffer[i] / 128.0 - 1.0;
     // Take the average of the two channels.
-    qreal sample = (sampleLeft + sampleRight) / 2.0;
+    qreal sample = (leftBuffer[i] + rightBuffer[i]) / 2.0;
 
     QRectF rect;
     if (sample > 0.0) {

@@ -23,10 +23,8 @@ public:
 
   int fps() const { return this->m_fps; };
 
-  std::vector<uint8_t> leftBuffer() const {
-    return this->worker.getLeftBuffer();
-  }
-  std::vector<uint8_t> rightBuffer() const {
+  std::vector<float> leftBuffer() const { return this->worker.getLeftBuffer(); }
+  std::vector<float> rightBuffer() const {
     return this->worker.getRightBuffer();
   }
 

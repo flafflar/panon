@@ -374,10 +374,13 @@ void AudioWorker::onCurrentDeviceChange() {
     this->stream = nullptr;
   }
 
-  // TODO: Don't pull these out of our asses.
   pa_sample_spec sample_spec = {
-      .format = PA_SAMPLE_U8,
+      // The FFT will require the audio data to be floats, so we have the server
+      // convert the audio to floats from the source's native format.
+      .format = PA_SAMPLE_FLOAT32NE,
+      // TODO: Don't set this rate arbitrarily.
       .rate = 44100,
+      // We can only process stereo sound, so we set a hard limit to 2 channels.
       .channels = 2,
   };
 
@@ -497,7 +500,7 @@ void AudioWorker::startRecording() {
         }
 
         // TODO: Who deallocates this?
-        uint8_t *buffer;
+        float *buffer;
         size_t size;
 
         // Read the raw data into the buffer.
@@ -537,7 +540,7 @@ void AudioWorker::startRecording() {
 
         // We have two channels, so the number of samples is half the number of
         // bytes.
-        size_t nsamples = size / 2;
+        size_t nsamples = size / sizeof(float) / 2;
 
         // First, resize the old buffers in case the fps changed.
         self->bufferLeft.resize(nsamples);
