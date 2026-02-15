@@ -1,12 +1,17 @@
 #include "AudioBufferProcessor.h"
 
-#include <chrono>
 #include <mutex>
 #include <thread>
 
 #include <QDebug>
 
 #include <fftw3.h>
+
+/**
+ * Creating plans in the fftw library is not thread safe, so we use this mutex
+ * to make sure only one thread is creating a plan at a time.
+ */
+std::mutex fftwPlanMutex;
 
 AudioBufferProcessor::AudioBufferProcessor() {
   // Start the thread immediately.
@@ -101,9 +106,15 @@ void AudioBufferProcessor::process() {
   // but our arrays are constantly swapped back and forth, which means their
   // addresses change. After I have this working correctly I can maybe implement
   // a better version where I don't recompute the plan every time.
-  fftwf_plan fftPlan = fftwf_plan_dft_r2c_1d(
-      this->scratchMono.size(), this->scratchMono.data(),
-      reinterpret_cast<fftwf_complex *>(this->scratchFFT.data()), FFTW_MEASURE);
+  fftwf_plan fftPlan;
+  {
+    std::lock_guard guard(fftwPlanMutex);
+
+    fftPlan = fftwf_plan_dft_r2c_1d(
+        this->scratchMono.size(), this->scratchMono.data(),
+        reinterpret_cast<fftwf_complex *>(this->scratchFFT.data()),
+        FFTW_MEASURE);
+  };
 
   fftwf_execute(fftPlan);
 
