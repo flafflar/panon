@@ -429,12 +429,11 @@ void AudioWorker::onCurrentDeviceChange() {
       },
       this);
 
-  const char *const deviceName =
-      this->m_currentDevice->identifier().toLocal8Bit().data();
+  QByteArray deviceName = this->m_currentDevice->identifier().toLocal8Bit();
 
   // TODO: Replace the nullptrs with values.
   // TODO: Do something with the return value of this.
-  pa_stream_connect_record(this->stream, deviceName, nullptr,
+  pa_stream_connect_record(this->stream, deviceName.constData(), nullptr,
                            PA_STREAM_NOFLAGS);
 }
 
