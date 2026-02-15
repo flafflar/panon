@@ -89,7 +89,7 @@ void AudioBufferProcessor::process() {
   // Prepare the FFT buffer.
   // Since our input data is real, the FFT is symmetric around the center, which
   // means we only need half the number of samples for the FFT result.
-  this->scratchFFT.resize(fftSize);
+  this->scratchFFT.resize(fftSize / 2 + 1);
 
   // Create a plan for running the FFT.
   // This call can be very expensive, because FFTW runs multiple implementations
