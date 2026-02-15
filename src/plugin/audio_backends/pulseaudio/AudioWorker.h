@@ -1,7 +1,5 @@
 #pragma once
 
-#include <QObject>
-
 #include <cstdint>
 #include <limits>
 #include <memory>
@@ -15,6 +13,7 @@
 #include <pulse/proplist.h>
 #include <pulse/stream.h>
 
+#include "AudioBufferProcessor.h"
 // TODO: Make this header private somehow?
 #include "PulseAudioDeviceInfo.h"
 
@@ -28,7 +27,7 @@ class AudioWorker : public QObject {
   Q_OBJECT
 
 public:
-  AudioWorker();
+  AudioWorker(AudioBufferProcessor &processor);
 
   // Connects to the Pulse server, and starts running in a loop, processing
   // incoming data.
@@ -38,10 +37,6 @@ public:
   devices() {
     return this->m_devices;
   }
-
-  // TODO: Performance? Does this copy the vector?
-  std::vector<float> getLeftBuffer() const { return this->bufferLeft; }
-  std::vector<float> getRightBuffer() const { return this->bufferRight; }
 
   void setCurrentDevice(std::shared_ptr<PulseAudioDeviceInfo> device);
 
@@ -59,6 +54,9 @@ Q_SIGNALS:
   void error(QString &errorMessage);
 
 private:
+  /** The processor that contains the audio buffers that we write into. */
+  AudioBufferProcessor &processor;
+
   pa_mainloop *loop;
   pa_proplist *proplist;
   pa_context *context;
@@ -69,11 +67,6 @@ private:
   // Update the rate at which the stream receives data, based on the current fps
   // value.
   void updateStreamFps();
-
-  // The buffer for the left audio channel.
-  std::vector<float> bufferLeft;
-  // The buffer for the right audio channel.
-  std::vector<float> bufferRight;
 
   // The callback invoked from libpulse when the context changes state.
   static void contextStateCallback(pa_context *context, void *data);

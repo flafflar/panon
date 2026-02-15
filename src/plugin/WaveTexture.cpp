@@ -77,14 +77,13 @@ uchar sampleToColor(const float sample) {
 }
 
 void WaveTexture::drawTextureImage() {
-  PulseAudioBackend *backend = this->m_audioBackend->backend();
+  AbstractAudioBackend *backend = this->m_audioBackend->backend();
 
-  std::vector<float> leftBuffer = backend->leftBuffer();
-  std::vector<float> rightBuffer = backend->rightBuffer();
+  AudioBuffers buffers = backend->audioBuffers();
 
   // The width of the image, which is also the number of samples in the buffer
   // (1 sample = 1 pixel).
-  int width = leftBuffer.size();
+  int width = buffers.left.size();
 
   // Resize the image to the size of the buffers.
   this->m_textureImage = QImage(width, 1, QImage::Format_RGBA8888);
@@ -95,9 +94,9 @@ void WaveTexture::drawTextureImage() {
 
   for (int i = 0; i < width; i++) {
     // The red channel is the left channel.
-    imageBuffer[0] = sampleToColor(leftBuffer[i]);
+    imageBuffer[0] = sampleToColor(buffers.left[i]);
     // The green channel is the right channel.
-    imageBuffer[1] = sampleToColor(rightBuffer[i]);
+    imageBuffer[1] = sampleToColor(buffers.right[i]);
     // The blue channel is not used, so leave it to 0.
     imageBuffer[2] = 0;
     // The alpha channel is not used, but we set it to 255 so we can visually

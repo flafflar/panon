@@ -19,7 +19,8 @@
 
 #include "PulseAudioDeviceInfo.h"
 
-AudioWorker::AudioWorker() : m_errorMessage(), m_currentDevice(nullptr) {
+AudioWorker::AudioWorker(AudioBufferProcessor &processor)
+    : processor(processor), m_errorMessage(), m_currentDevice(nullptr) {
   // Initialize the properties of the Pulse client, which will be the same in
   // every connection.
   this->proplist = pa_proplist_new();
@@ -542,15 +543,24 @@ void AudioWorker::startRecording() {
         // bytes.
         size_t nsamples = size / sizeof(float) / 2;
 
-        // First, resize the old buffers in case the fps changed.
-        self->bufferLeft.resize(nsamples);
-        self->bufferRight.resize(nsamples);
+        // The inputs of the processor are protected with a mutex guard, so we
+        // create a new scope in order to limit for how long we lock them.
+        {
+          auto buffers = self->processor.getInputs();
 
-        // Separate the interleaved samples into the two separate buffers.
-        for (size_t i = 0; i < nsamples; i += 1) {
-          self->bufferLeft[i] = buffer[2 * i];
-          self->bufferRight[i] = buffer[2 * i + 1];
-        }
+          // First, resize the old buffers in case the fps changed.
+          buffers.left.resize(nsamples);
+          buffers.right.resize(nsamples);
+
+          // Separate the interleaved samples into the two separate buffers.
+          for (size_t i = 0; i < nsamples; i += 1) {
+            buffers.left[i] = buffer[2 * i];
+            buffers.right[i] = buffer[2 * i + 1];
+          }
+
+          // Signal to the processor that we updated the input buffers.
+          self->processor.signalDirty();
+        };
 
         // Now that we have read the buffer from the server, we should instruct
         // the server to drop it.

@@ -5,10 +5,11 @@
 #include <QThread>
 #include <memory>
 
+#include "AbstractAudioBackend.h"
 #include "AudioDeviceInfo.h"
 #include "AudioWorker.h"
 
-class PulseAudioBackend : public QObject {
+class PulseAudioBackend : public AbstractAudioBackend {
   Q_OBJECT
 
   AudioWorker worker;
@@ -17,26 +18,23 @@ class PulseAudioBackend : public QObject {
 public:
   PulseAudioBackend();
 
-  QList<AudioDeviceInfoQML *> devices();
+  virtual QList<AudioDeviceInfoQML *> devices() override;
 
-  AudioDeviceInfoQML *currentDevice() { return this->m_currentDevice; };
+  virtual AudioDeviceInfoQML *currentDevice() const override {
+    return this->m_currentDevice;
+  };
 
-  int fps() const { return this->m_fps; };
-
-  std::vector<float> leftBuffer() const { return this->worker.getLeftBuffer(); }
-  std::vector<float> rightBuffer() const {
-    return this->worker.getRightBuffer();
-  }
+  virtual int fps() const override { return this->m_fps; };
 
 public Q_SLOTS:
 
-  void setCurrentDevice(AudioDeviceInfoQML *device) {
+  virtual void setCurrentDevice(AudioDeviceInfoQML *device) override {
     std::shared_ptr<AudioDeviceInfo> dev = *device;
     this->worker.setCurrentDevice(
         std::dynamic_pointer_cast<PulseAudioDeviceInfo>(dev));
   }
 
-  void setFps(int fps) {
+  virtual void setFps(int fps) override {
     this->m_fps = fps;
     this->worker.setFps(fps);
   }
@@ -45,9 +43,6 @@ private Q_SLOTS:
   void updateDevices();
 
 Q_SIGNALS:
-  void devicesChanged();
-
-  void buffersUpdated();
 
 private:
   QList<AudioDeviceInfoQML *> m_devices;

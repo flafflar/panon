@@ -7,7 +7,8 @@
 #include <QObject>
 #include <qlogging.h>
 
-PulseAudioBackend::PulseAudioBackend() : worker(), m_currentDevice(nullptr) {
+PulseAudioBackend::PulseAudioBackend()
+    : worker(this->processor), m_currentDevice(nullptr) {
   this->worker.moveToThread(&this->workerThread);
 
   // Start the worker when the thread launches.

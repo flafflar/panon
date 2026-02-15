@@ -3,8 +3,8 @@
 #include <QObject>
 #include <QQmlEngine>
 
+#include "AbstractAudioBackend.h"
 #include "AudioDeviceInfo.h"
-#include "PulseAudioBackend.h"
 
 class AudioBackend : public QObject {
   Q_OBJECT
@@ -18,14 +18,14 @@ class AudioBackend : public QObject {
 
   Q_PROPERTY(int fps READ fps WRITE setFps)
 
-  PulseAudioBackend *m_backend;
+  AbstractAudioBackend *m_backend;
 
 public:
   static AudioBackend *create(QQmlEngine *qmlEngine, QJSEngine *jsEngine);
 
   AudioBackend();
 
-  PulseAudioBackend *backend() const { return this->m_backend; }
+  AbstractAudioBackend *backend() const { return this->m_backend; }
 
   QQmlListProperty<AudioDeviceInfoQML> devices();
 
