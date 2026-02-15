@@ -17,6 +17,7 @@ add_library(PanonPlugin SHARED
   AudioBackend.cpp
   WaveViewer.cpp
   WaveTexture.cpp
+  SpectrumTexture.cpp
 )
 
 target_link_libraries(PanonPlugin

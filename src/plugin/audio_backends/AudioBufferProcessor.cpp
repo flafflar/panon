@@ -1,8 +1,12 @@
 #include "AudioBufferProcessor.h"
 
-#include <QDebug>
+#include <chrono>
 #include <mutex>
 #include <thread>
+
+#include <QDebug>
+
+#include <fftw3.h>
 
 AudioBufferProcessor::AudioBufferProcessor() {
   // Start the thread immediately.
@@ -72,6 +76,39 @@ void AudioBufferProcessor::process() {
     this->scratchMono[i] = (this->scratchLeft[i] + this->scratchRight[i]) / 2.0;
   }
 
+  // The FFT can only be performed on arrays with an even count of samples, so
+  // we round our samples count down to the nearest multiple of 2 (so we will
+  // essentially ignore the last sample if the sample count is even).
+  int fftSize = samples - (samples % 2);
+
+  // Prepare the FFT buffer.
+  // Since our input data is real, the FFT is symmetric around the center, which
+  // means we only need half the number of samples for the FFT result.
+  this->scratchFFT.resize(fftSize);
+
+  // Create a plan for running the FFT.
+  // This call can be very expensive, because FFTW runs multiple implementations
+  // of the FFT and times them, to see which one is faster in this specific
+  // machine. (FFTW claims that this can take several seconds, but on my machine
+  // it took 60ms for a 1470 sample array). But, after making this timing once,
+  // it caches the results, so in subsequent calls with the same array size it
+  // uses the algorithm from the cache. This means that this will have a
+  // performance impact only when the buffer size changes. Also, since this runs
+  // in a different thread, it will never block the application in the case it
+  // is taking too long to compute.
+  // TODO: Performance-wise this is not the best, but this is easier to
+  // implement, because a plan is made to operate on the same arrays repeatedly,
+  // but our arrays are constantly swapped back and forth, which means their
+  // addresses change. After I have this working correctly I can maybe implement
+  // a better version where I don't recompute the plan every time.
+  fftwf_plan fftPlan = fftwf_plan_dft_r2c_1d(
+      this->scratchMono.size(), this->scratchMono.data(),
+      reinterpret_cast<fftwf_complex *>(this->scratchFFT.data()), FFTW_MEASURE);
+
+  fftwf_execute(fftPlan);
+
+  fftwf_destroy_plan(fftPlan);
+
   // Again, we create a separate scope in order to lock the outputs for the
   // duration of the block.
   {
@@ -83,5 +120,6 @@ void AudioBufferProcessor::process() {
     this->outLeft.swap(this->scratchLeft);
     this->outRight.swap(this->scratchRight);
     this->outMono.swap(this->scratchMono);
+    this->outFFT.swap(this->scratchFFT);
   };
 }

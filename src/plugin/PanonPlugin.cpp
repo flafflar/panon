@@ -2,6 +2,7 @@
 
 #include "AudioBackend.h"
 #include "ShaderWidget.h"
+#include "SpectrumTexture.h"
 #include "WaveTexture.h"
 #include "WaveViewer.h"
 
@@ -10,6 +11,7 @@ void PanonPlugin::registerTypes(const char *uri) {
 
   qmlRegisterType<AudioBackend>(uri, 1, 0, "AudioBackend");
   qmlRegisterType<ShaderWidget>(uri, 1, 0, "ShaderWidget");
+  qmlRegisterType<SpectrumTexture>(uri, 1, 0, "SpectrumTexture");
   qmlRegisterType<WaveTexture>(uri, 1, 0, "WaveTexture");
   qmlRegisterType<WaveViewer>(uri, 1, 0, "WaveViewer");
 }

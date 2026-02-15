@@ -23,7 +23,19 @@ add_custom_command(
     ${CMAKE_CURRENT_SOURCE_DIR}/wave.frag
 )
 
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/spectrum.frag.qsb
+  COMMAND Qt6::qsb
+    ${CMAKE_CURRENT_SOURCE_DIR}/spectrum.frag
+    --qt6
+    -o ${CMAKE_CURRENT_BINARY_DIR}/spectrum.frag.qsb
+  DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/spectrum.frag
+)
+
 plasmoid_add_files(xyz.flafflar.panon
   PREFIX /shaders
-  FILES ${CMAKE_CURRENT_BINARY_DIR}/wave.frag.qsb
+  FILES 
+    ${CMAKE_CURRENT_BINARY_DIR}/wave.frag.qsb
+    ${CMAKE_CURRENT_BINARY_DIR}/spectrum.frag.qsb
 )

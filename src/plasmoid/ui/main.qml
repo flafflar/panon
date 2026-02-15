@@ -40,6 +40,20 @@ PlasmoidItem {
       visible: false
     }
 
+    SpectrumTexture {
+      id: spectrumTexture
+      audioBackend: audioBackend
+      visible: false
+    }
+
+    ShaderEffectSource {
+      id: spectrumTextureSource
+      sourceItem: spectrumTexture
+      width: spectrumTexture.width
+      height: spectrumTexture.height
+      visible: false
+    }
+
     ShaderEffect {
       id: mainShader
 
@@ -48,8 +62,9 @@ PlasmoidItem {
 
       property variant iResolution: Qt.vector3d(mainShader.width, mainShader.height, 1)
       property variant iChannel0: waveTextureSource
+      property variant iChannel1: spectrumTextureSource
 
-      fragmentShader: "../shaders/wave.frag.qsb"
+      fragmentShader: "../shaders/spectrum.frag.qsb"
     }
   } 
 }

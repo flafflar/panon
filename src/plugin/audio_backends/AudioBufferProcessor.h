@@ -1,10 +1,16 @@
 #pragma once
 
+#include <complex>
 #include <condition_variable>
 #include <functional>
 #include <mutex>
 #include <thread>
 #include <vector>
+
+#include <fftw3.h>
+
+// Make sure fftwf_complex and std::complex are binary-compatible.
+static_assert(sizeof(std::complex<float>) == sizeof(fftwf_complex));
 
 /**
  * A utility struct that contains references to the input buffers of an
@@ -31,6 +37,7 @@ struct AudioBufferProcessorOutputs {
   const std::vector<float> &left;
   const std::vector<float> &right;
   const std::vector<float> &mono;
+  const std::vector<std::complex<float>> &fft;
 
   const std::lock_guard<std::mutex> guard;
 };
@@ -87,6 +94,7 @@ public:
     return {.left = this->outLeft,
             .right = this->outRight,
             .mono = this->outMono,
+            .fft = this->outFFT,
             .guard = std::lock_guard(this->outMutex)};
   }
 
@@ -114,6 +122,8 @@ private:
   std::vector<float> outRight;
   /** The buffer that we will output the mono channel to. */
   std::vector<float> outMono;
+  /** The buffer that we will output the FFT transform of the audio to. */
+  std::vector<std::complex<float>> outFFT;
 
   /** The mutex controlling access to all the output buffers. */
   std::mutex outMutex;
@@ -135,6 +145,8 @@ private:
   std::vector<float> scratchRight;
   /** An intermediate buffer that we write the mono channel data in. */
   std::vector<float> scratchMono;
+  /** An intermediate buffer that holds the result of the FFT. */
+  std::vector<std::complex<float>> scratchFFT;
 
   /** The thread that runs the processing on the buffers. */
   std::jthread thread;
