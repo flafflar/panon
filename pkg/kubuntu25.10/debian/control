@@ -10,6 +10,7 @@ Build-Depends:
  extra-cmake-modules,
  qt6-declarative-dev,
  qt6-multimedia-dev,
+ qt6-shadertools-dev,
  libkf6config-dev,
  libkf6i18n-dev,
  libplasma-dev,
