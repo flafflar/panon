@@ -14,6 +14,7 @@ Build-Depends:
  libkf6config-dev,
  libkf6i18n-dev,
  libplasma-dev,
+ libfftw3-dev,
  libpulse-dev,
 Standards-Version: 4.7.2
 Homepage: https://github.com/flafflar/panon
