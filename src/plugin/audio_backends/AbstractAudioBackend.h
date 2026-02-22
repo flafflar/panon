@@ -4,6 +4,7 @@
 
 #include <QObject>
 
+#include "AudioBackendSettings.h"
 #include "AudioBufferProcessor.h"
 #include "AudioDeviceInfo.h"
 
@@ -16,6 +17,10 @@ class AbstractAudioBackend : public QObject {
   Q_PROPERTY(AudioDeviceInfoQML *currentDevice READ currentDevice WRITE
                  setCurrentDevice)
   Q_PROPERTY(int fps READ fps WRITE setFps)
+  Q_PROPERTY(SpectrumVolumeMode::Mode spectrumVolumeMode READ spectrumVolumeMode
+                 WRITE setSpectrumVolumeMode)
+  Q_PROPERTY(
+      float spectrumLogFloor READ spectrumLogFloor WRITE setSpectrumLogFloor)
 
 public:
   // TODO: Const?
@@ -27,10 +32,18 @@ public:
 
   AudioBuffers audioBuffers() { return this->processor.getOutputs(); };
 
+  virtual SpectrumVolumeMode::Mode spectrumVolumeMode() const;
+
+  virtual float spectrumLogFloor() const;
+
 public Q_SLOTS:
   virtual void setCurrentDevice(AudioDeviceInfoQML *device) = 0;
 
   virtual void setFps(int fps) = 0;
+
+  virtual void setSpectrumVolumeMode(SpectrumVolumeMode::Mode mode);
+
+  virtual void setSpectrumLogFloor(float floor);
 
 Q_SIGNALS:
   void devicesChanged();

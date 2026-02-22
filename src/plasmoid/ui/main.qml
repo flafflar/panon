@@ -24,6 +24,9 @@ PlasmoidItem {
       }
 
       fps: plasmoid.configuration.fps
+
+      spectrumVolumeMode: plasmoid.configuration.spectrumVolumeMode
+      spectrumLogFloor: plasmoid.configuration.spectrumLogFloor
     }
 
     WaveTexture {

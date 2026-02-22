@@ -9,6 +9,8 @@
 
 #include <fftw3.h>
 
+#include "AudioBackendSettings.h"
+
 // Make sure fftwf_complex and std::complex are binary-compatible.
 static_assert(sizeof(std::complex<float>) == sizeof(fftwf_complex));
 
@@ -38,6 +40,7 @@ struct AudioBufferProcessorOutputs {
   const std::vector<float> &right;
   const std::vector<float> &mono;
   const std::vector<std::complex<float>> &fft;
+  const std::vector<float> &spectrum;
 
   const std::lock_guard<std::mutex> guard;
 };
@@ -95,6 +98,7 @@ public:
             .right = this->outRight,
             .mono = this->outMono,
             .fft = this->outFFT,
+            .spectrum = this->outSpectrum,
             .guard = std::lock_guard(this->outMutex)};
   }
 
@@ -106,6 +110,14 @@ public:
    * whatever you do in it is thread-safe.
    */
   void onUpdate(std::function<void()> callback);
+
+  SpectrumVolumeMode::Mode getSpectrumVolumeMode() const;
+
+  void setSpectrumVolumeMode(SpectrumVolumeMode::Mode mode);
+
+  float getSpectrumLogFloor() const;
+
+  void setSpectrumLogFloor(float floor);
 
 private:
   /** The buffer of the left channel we receive as input. */
@@ -124,6 +136,11 @@ private:
   std::vector<float> outMono;
   /** The buffer that we will output the FFT transform of the audio to. */
   std::vector<std::complex<float>> outFFT;
+  /**
+   * The buffer that the spectrum data (volume of each frequency) of the audio
+   * will be outputed.
+   */
+  std::vector<float> outSpectrum;
 
   /** The mutex controlling access to all the output buffers. */
   std::mutex outMutex;
@@ -147,6 +164,23 @@ private:
   std::vector<float> scratchMono;
   /** An intermediate buffer that holds the result of the FFT. */
   std::vector<std::complex<float>> scratchFFT;
+  /**
+   * An intermediate buffer that holds the spectrum data.
+   * The spectrum data are the data of the FFT after having gone through some
+   * kind of preprocessing, and also scaled to the [0, 1] range.
+   */
+  std::vector<float> scratchSpectrum;
+
+  /**
+   * A setting that determines how the amplitude of the FFT will be converted to
+   * a volume level (e.g. linearly, logarithmically).
+   */
+  std::atomic<SpectrumVolumeMode::Mode> spectrumVolumeMode;
+  /**
+   * When the spectrum is in logarithmic mode, this determines the smallest
+   * amplitude that is visible.
+   */
+  std::atomic<float> spectrumLogFloorDb = -48.0f;
 
   /** The thread that runs the processing on the buffers. */
   std::jthread thread;

@@ -12,5 +12,13 @@
     <entry name="device" type="String">
       <default></default>
     </entry>
+
+    <entry name="spectrumVolumeMode" type="Int">
+      <default>1</default>
+    </entry>
+
+    <entry name="spectrumLogFloor" type="Double">
+      <default>-48.0</default>
+    </entry>
   </group>
 </kcfg>

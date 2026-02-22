@@ -1,5 +1,7 @@
 #include "AudioBufferProcessor.h"
+#include "AudioBackendSettings.h"
 
+#include <atomic>
 #include <mutex>
 #include <thread>
 
@@ -38,6 +40,23 @@ void AudioBufferProcessor::signalDirty() {
 
 void AudioBufferProcessor::onUpdate(std::function<void()> callback) {
   this->callback = callback;
+}
+
+SpectrumVolumeMode::Mode AudioBufferProcessor::getSpectrumVolumeMode() const {
+  return this->spectrumVolumeMode.load(std::memory_order_relaxed);
+}
+
+void AudioBufferProcessor::setSpectrumVolumeMode(
+    SpectrumVolumeMode::Mode mode) {
+  this->spectrumVolumeMode.store(mode, std::memory_order_relaxed);
+}
+
+float AudioBufferProcessor::getSpectrumLogFloor() const {
+  return this->spectrumLogFloorDb.load(std::memory_order_relaxed);
+}
+
+void AudioBufferProcessor::setSpectrumLogFloor(float floor) {
+  this->spectrumLogFloorDb.store(floor, std::memory_order_relaxed);
 }
 
 void AudioBufferProcessor::threadFn() {
@@ -84,12 +103,14 @@ void AudioBufferProcessor::process() {
   // The FFT can only be performed on arrays with an even count of samples, so
   // we round our samples count down to the nearest multiple of 2 (so we will
   // essentially ignore the last sample if the sample count is even).
-  int fftSize = samples - (samples % 2);
+  int fftInputSize = samples - (samples % 2);
 
-  // Prepare the FFT buffer.
   // Since our input data is real, the FFT is symmetric around the center, which
   // means we only need half the number of samples for the FFT result.
-  this->scratchFFT.resize(fftSize / 2 + 1);
+  size_t fftOutputSize = fftInputSize / 2 + 1;
+
+  // Prepare the FFT buffer.
+  this->scratchFFT.resize(fftOutputSize);
 
   // Create a plan for running the FFT.
   // This call can be very expensive, because FFTW runs multiple implementations
@@ -120,6 +141,35 @@ void AudioBufferProcessor::process() {
 
   fftwf_destroy_plan(fftPlan);
 
+  // Copy the magnitudes of the FFT frequencies to the spectrum buffer.
+  this->scratchSpectrum.resize(fftOutputSize);
+  for (size_t i = 0; i < fftOutputSize; i++) {
+    float amplitude = std::abs(this->scratchFFT[i]) / (float)fftOutputSize;
+    this->scratchSpectrum[i] = amplitude;
+  }
+
+  SpectrumVolumeMode::Mode spectrumVolumeMode =
+      this->spectrumVolumeMode.load(std::memory_order_relaxed);
+
+  // Process the spectrum according to the current mode.
+  switch (spectrumVolumeMode) {
+  case SpectrumVolumeMode::Linear:
+    // No-op, the volume is already linear by default.
+    break;
+
+  case SpectrumVolumeMode::Logarithmic:
+    float floorDb = this->spectrumLogFloorDb.load(std::memory_order_relaxed);
+    for (size_t i = 0; i < fftOutputSize; i++) {
+      float amplitude = this->scratchSpectrum[i];
+
+      float db = 20 * std::log10(amplitude);
+      float volume = (db - floorDb) / -floorDb;
+
+      this->scratchSpectrum[i] = volume;
+    }
+    break;
+  }
+
   // Again, we create a separate scope in order to lock the outputs for the
   // duration of the block.
   {
@@ -132,5 +182,6 @@ void AudioBufferProcessor::process() {
     this->outRight.swap(this->scratchRight);
     this->outMono.swap(this->scratchMono);
     this->outFFT.swap(this->scratchFFT);
+    this->outSpectrum.swap(this->scratchSpectrum);
   };
 }

@@ -2,8 +2,10 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <qlogging.h>
 
 #include "AbstractAudioBackend.h"
+#include "AudioBackendSettings.h"
 #include "AudioDeviceInfo.h"
 
 class AudioBackend : public QObject {
@@ -17,6 +19,12 @@ class AudioBackend : public QObject {
                  setCurrentDevice)
 
   Q_PROPERTY(int fps READ fps WRITE setFps)
+
+  Q_PROPERTY(SpectrumVolumeMode::Mode spectrumVolumeMode READ spectrumVolumeMode
+                 WRITE setSpectrumVolumeMode)
+
+  Q_PROPERTY(
+      float spectrumLogFloor READ spectrumLogFloor WRITE setSpectrumLogFloor)
 
   AbstractAudioBackend *m_backend;
 
@@ -33,11 +41,19 @@ public:
 
   int fps() const;
 
+  SpectrumVolumeMode::Mode spectrumVolumeMode() const;
+
+  float spectrumLogFloor() const;
+
 public Q_SLOTS:
 
   void setCurrentDevice(AudioDeviceInfoQML *device);
 
   void setFps(int fps);
+
+  void setSpectrumVolumeMode(SpectrumVolumeMode::Mode mode);
+
+  void setSpectrumLogFloor(float floor);
 
 Q_SIGNALS:
   void devicesChanged();

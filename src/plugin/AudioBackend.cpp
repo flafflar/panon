@@ -42,3 +42,19 @@ void AudioBackend::setCurrentDevice(AudioDeviceInfoQML *device) {
 int AudioBackend::fps() const { return this->m_backend->fps(); }
 
 void AudioBackend::setFps(int fps) { this->m_backend->setFps(fps); }
+
+SpectrumVolumeMode::Mode AudioBackend::spectrumVolumeMode() const {
+  return this->m_backend->spectrumVolumeMode();
+}
+
+void AudioBackend::setSpectrumVolumeMode(SpectrumVolumeMode::Mode mode) {
+  this->m_backend->setSpectrumVolumeMode(mode);
+}
+
+float AudioBackend::spectrumLogFloor() const {
+  return this->m_backend->spectrumLogFloor();
+}
+
+void AudioBackend::setSpectrumLogFloor(float floor) {
+  this->m_backend->setSpectrumLogFloor(floor);
+}

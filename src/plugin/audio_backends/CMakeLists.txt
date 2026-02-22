@@ -38,6 +38,7 @@ endif()
 
 add_library(AudioBackendCommon STATIC
   AudioDeviceInfo.h
+  AudioBackendSettings.cpp
   AudioBufferProcessor.cpp
   AbstractAudioBackend.cpp
 )
@@ -45,6 +46,7 @@ add_library(AudioBackendCommon STATIC
 target_link_libraries(AudioBackendCommon
   PUBLIC
     Qt6::Core
+    Qt6::Qml
   PRIVATE
     ${FFTW3f_LIBRARIES}
 )
