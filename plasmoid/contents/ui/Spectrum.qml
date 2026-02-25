@@ -174,10 +174,12 @@ Item{
     readonly property bool failCompileBufferShader: loadBufferShaderSource && false // (bufferSES.sourceItem.status==ShaderEffect.Error)
     property string fps_message:""
     property string error_message:
-        shaderSourceReader.error_message
-        + (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
-        + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+mainSE.log):"")
-        + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+bufferSES.sourceItem.log):"")
+        venvCreator.isCreated ? (
+            shaderSourceReader.error_message
+            + (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
+            + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+mainSE.log):"")
+            + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+bufferSES.sourceItem.log):"")
+        ) : i18n("Creating Venv...")
     QQC2.Label {
         id:console_output
         anchors.fill: parent
@@ -214,6 +216,8 @@ Item{
     }
 
     ShaderSource{id:shaderSourceReader}
+
+    CreateVenv{id:venvCreator}
 
     WsConnection{
         shaderSourceReader:shaderSourceReader
