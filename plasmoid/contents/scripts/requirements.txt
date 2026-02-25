@@ -1,5 +1,6 @@
-docopt
-numpy
-pyaudio
-cffi
-websockets
+# IMO, supply chain attacks are more scary than old vulnerabilities.
+docopt==0.6.2
+numpy==2.4.2
+pyaudio==0.2.14
+cffi==1.17.1
+websockets==15.0.1
